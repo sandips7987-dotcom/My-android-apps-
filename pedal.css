@@ -1,0 +1,824 @@
+/* ==========================================================================
+   VoxSynth DD-6 — Stompbox Hardware Chassis, OLED Screen, Knobs & Footswitch
+   ========================================================================== */
+
+.pedal-chassis {
+  position: relative;
+  width: 100%;
+  max-width: 520px;
+  border-radius: 26px;
+  padding: 18px 18px 22px;
+  background: linear-gradient(180deg, var(--chassis-top) 0%, var(--chassis-mid) 52%, var(--chassis-bot) 100%);
+  border: 2px solid var(--chassis-border);
+  box-shadow:
+    inset 0 2px 1px var(--chassis-bevel-light),
+    inset 0 -3px 6px var(--chassis-bevel-dark),
+    0 24px 55px rgba(0, 0, 0, 0.52);
+  color: var(--chassis-text);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  user-select: none;
+}
+
+/* Corner Hardware Mounting Screws */
+.chassis-screw {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #cbd5e1 0%, #64748b 65%, #334155 100%);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.55), 0 1px 2px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+}
+
+.chassis-screw::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 2px;
+  right: 2px;
+  height: 1.5px;
+  background: rgba(15, 23, 42, 0.55);
+  transform: translateY(-50%) rotate(-28deg);
+}
+
+.screw-tl { top: 10px; left: 10px; }
+.screw-tr { top: 10px; right: 10px; }
+.screw-bl { bottom: 10px; left: 10px; }
+.screw-br { bottom: 10px; right: 10px; }
+
+/* Hardware Jack Legends Row */
+.jack-strip {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--chassis-subtext);
+}
+
+.jack-badge-center {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--chassis-text);
+  font-size: 0.78rem;
+}
+
+/* ==========================================================================
+   Studio Digital OLED / LCD Display Panel
+   ========================================================================== */
+
+.oled-bezel {
+  background: var(--oled-bezel);
+  border-radius: 16px;
+  padding: 10px;
+  border: 2px solid rgba(0, 0, 0, 0.55);
+  box-shadow:
+    inset 0 3px 10px rgba(0, 0, 0, 0.85),
+    0 1px 0 var(--chassis-bevel-light);
+}
+
+.oled-screen {
+  position: relative;
+  background-color: var(--oled-bg);
+  background-image:
+    linear-gradient(var(--oled-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--oled-grid) 1px, transparent 1px);
+  background-size: 16px 16px;
+  border-radius: 10px;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--oled-primary);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: hidden;
+}
+
+/* Top Telemetry Strip inside OLED */
+.oled-telemetry {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--oled-grid);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.tele-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tele-sep {
+  color: var(--oled-dim);
+}
+
+.tele-mode {
+  color: var(--oled-secondary);
+}
+
+.tele-state.active {
+  color: #34d399;
+}
+
+.tele-state.bypass {
+  color: #94a3b8;
+}
+
+.tele-route {
+  color: var(--oled-primary);
+}
+
+.tele-mic.live {
+  color: #34d399;
+}
+
+.tele-mic.muted {
+  color: #f59e0b;
+}
+
+.tele-rec {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--oled-dim);
+}
+
+.tele-rec.recording {
+  color: #f87171;
+}
+
+.rec-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.tele-rec.recording .rec-dot {
+  background: #ef4444;
+  box-shadow: 0 0 8px #ef4444;
+  animation: recBlink 0.9s infinite;
+}
+
+@keyframes recBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0.18; }
+}
+
+/* Primary 7-Segment / Dot-Matrix Time & BPM Readout */
+.oled-readout-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.delay-readout-block {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.delay-ms-input {
+  width: 118px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 0 4px;
+  font-family: var(--font-mono);
+  font-size: 2.15rem;
+  font-weight: 700;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--oled-primary);
+  text-shadow: 0 0 14px var(--oled-glow);
+  -moz-appearance: textfield;
+}
+
+.delay-ms-input::-webkit-outer-spin-button,
+.delay-ms-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.delay-ms-input:hover,
+.delay-ms-input:focus {
+  border-color: var(--oled-dim);
+  background: rgba(255, 255, 255, 0.04);
+  outline: none;
+}
+
+.delay-unit {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--oled-dim);
+}
+
+.bpm-readout {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+.bpm-value {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--oled-secondary);
+  line-height: 1.1;
+}
+
+.bpm-label {
+  font-size: 0.65rem;
+  color: var(--oled-dim);
+  letter-spacing: 0.08em;
+}
+
+/* Fine-Tune Buttons (-10ms -1ms +1ms +10ms) & Viz Mode */
+.oled-finetune-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.finetune-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.oled-micro-btn {
+  min-height: 28px;
+  min-width: 44px;
+  padding: 2px 7px;
+  border-radius: 5px;
+  border: 1px solid var(--oled-dim);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--oled-secondary);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 120ms ease, color 120ms ease;
+}
+
+.oled-micro-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.oled-micro-btn:active {
+  transform: scale(0.95);
+}
+
+.oled-micro-btn.active {
+  background: var(--oled-primary);
+  color: #040911;
+  border-color: var(--oled-primary);
+}
+
+/* Live Canvas Oscilloscope / Spectrum + Dual VU Meters */
+.oled-canvas-wrap {
+  position: relative;
+  width: 100%;
+  height: 104px;
+  border-radius: 6px;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid var(--oled-grid);
+  overflow: hidden;
+}
+
+#oled-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.vu-rack {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.vu-row {
+  display: grid;
+  grid-template-columns: 34px 1fr 44px 30px;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.vu-label {
+  color: var(--oled-dim);
+  font-weight: 700;
+}
+
+.vu-track {
+  position: relative;
+  height: 8px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.07);
+  overflow: hidden;
+}
+
+.vu-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #10b981 0%, #34d399 62%, #f59e0b 84%, #ef4444 100%);
+  transform-origin: left center;
+  will-change: width;
+}
+
+.vu-db {
+  text-align: right;
+  color: var(--oled-secondary);
+}
+
+.vu-clip {
+  text-align: center;
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: rgba(239, 68, 68, 0.28);
+  letter-spacing: 0.04em;
+}
+
+.vu-clip.lit {
+  color: #ef4444;
+  text-shadow: 0 0 8px #ef4444;
+}
+
+/* ==========================================================================
+   Main 4 DD-6 Stompbox Knobs & 4 Voice Preamp Mini-Knobs
+   ========================================================================== */
+
+.knob-section {
+  background: var(--chassis-plate);
+  border-radius: 16px;
+  padding: 14px 10px 12px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.14);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.main-knobs-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  align-items: start;
+}
+
+.mini-knobs-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+  align-items: start;
+}
+
+.knob-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  text-align: center;
+}
+
+.knob-label {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--chassis-text);
+  white-space: nowrap;
+}
+
+.knob-mini-label {
+  font-family: var(--font-display);
+  font-size: 0.64rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--chassis-subtext);
+  white-space: nowrap;
+}
+
+.knob-dial-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  touch-action: none;
+  cursor: ns-resize;
+}
+
+.knob-dial-wrap.large {
+  width: 72px;
+  height: 72px;
+}
+
+.knob-dial-wrap.mini {
+  width: 52px;
+  height: 52px;
+}
+
+.knob-scale-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.knob-body {
+  position: relative;
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, var(--knob-body) 0%, var(--knob-rim) 100%);
+  box-shadow:
+    0 6px 12px rgba(0, 0, 0, 0.42),
+    inset 0 1px 1px rgba(255, 255, 255, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: box-shadow 120ms ease;
+}
+
+.knob-dial-wrap.large .knob-body {
+  width: 54px;
+  height: 54px;
+}
+
+.knob-dial-wrap.mini .knob-body {
+  width: 38px;
+  height: 38px;
+}
+
+.knob-dial-wrap.dragging .knob-body {
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.5),
+    0 0 0 2px var(--accent-bright);
+}
+
+.knob-cap {
+  position: relative;
+  width: 76%;
+  height: 76%;
+  border-radius: 50%;
+  background: linear-gradient(145deg, var(--knob-cap-top) 0%, var(--knob-cap-bot) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  will-change: transform;
+}
+
+.knob-pointer {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  width: 3px;
+  height: 44%;
+  margin-left: -1.5px;
+  border-radius: 2px;
+  background: var(--knob-pointer);
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
+}
+
+.knob-dial-wrap.mini .knob-pointer {
+  width: 2.5px;
+  margin-left: -1.25px;
+  top: 3px;
+}
+
+.knob-readout {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--chassis-subtext);
+  min-height: 15px;
+}
+
+/* ==========================================================================
+   Illuminated Hardware Control Push-Buttons & Master Recorder Transport
+   ========================================================================== */
+
+.hw-buttons-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+@media (min-width: 440px) {
+  .hw-buttons-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.hw-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 50px;
+  padding: 6px 6px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.35);
+  background: linear-gradient(180deg, #273041 0%, #171d29 100%);
+  color: #cbd5e1;
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-align: center;
+  cursor: pointer;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  transition: transform 80ms ease, box-shadow 80ms ease, border-color 140ms ease, color 140ms ease;
+}
+
+.hw-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.45);
+}
+
+.hw-led {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #334155;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.7);
+  transition: background 120ms ease, box-shadow 120ms ease;
+}
+
+.hw-btn.lit-green {
+  color: #ecfdf5;
+  border-color: #10b981;
+}
+
+.hw-btn.lit-green .hw-led {
+  background: #10b981;
+  box-shadow: 0 0 10px #10b981;
+}
+
+.hw-btn.lit-blue {
+  color: #e0f2fe;
+  border-color: #38bdf8;
+}
+
+.hw-btn.lit-blue .hw-led {
+  background: #38bdf8;
+  box-shadow: 0 0 10px #38bdf8;
+}
+
+.hw-btn.lit-amber {
+  color: #fef3c7;
+  border-color: #f59e0b;
+}
+
+.hw-btn.lit-amber .hw-led {
+  background: #f59e0b;
+  box-shadow: 0 0 10px #f59e0b;
+}
+
+.hw-btn.lit-red {
+  color: #fee2e2;
+  border-color: #ef4444;
+}
+
+.hw-btn.lit-red .hw-led {
+  background: #ef4444;
+  box-shadow: 0 0 10px #ef4444;
+}
+
+/* Master Recorder Transport Row */
+.transport-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.transport-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-height: 42px;
+  padding: 6px 8px;
+  border-radius: 9px;
+  border: 1px solid rgba(0, 0, 0, 0.35);
+  background: linear-gradient(180deg, #212836 0%, #141923 100%);
+  color: #cbd5e1;
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.42);
+}
+
+.transport-btn:active {
+  transform: translateY(1px);
+}
+
+.transport-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.transport-btn.rec-active {
+  background: linear-gradient(180deg, #991b1b 0%, #7f1d1d 100%);
+  border-color: #f87171;
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(239, 68, 68, 0.42);
+}
+
+.transport-btn.pause-active {
+  border-color: #f59e0b;
+  color: #fde68a;
+}
+
+.transport-btn.audition-btn {
+  border-color: rgba(56, 189, 248, 0.35);
+  color: #bae6fd;
+}
+
+/* ==========================================================================
+   CHECK LED & Iconic Large Metallic Stomp Pedal Footswitch
+   ========================================================================== */
+
+.stomp-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  padding-top: 4px;
+}
+
+.check-led-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.check-led-label {
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--chassis-text);
+}
+
+.check-led {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #2d1b1b;
+  border: 2px solid rgba(0, 0, 0, 0.55);
+  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.25);
+  transition: background 80ms ease, box-shadow 80ms ease;
+}
+
+.check-led.on-red {
+  background: radial-gradient(circle at 35% 35%, #fecaca 0%, #ef4444 55%, #b91c1c 100%);
+  box-shadow: 0 0 14px #ef4444, 0 0 26px rgba(239, 68, 68, 0.55);
+}
+
+.check-led.on-green {
+  background: radial-gradient(circle at 35% 35%, #d1fae5 0%, #10b981 55%, #047857 100%);
+  box-shadow: 0 0 14px #10b981, 0 0 26px rgba(16, 185, 129, 0.55);
+}
+
+.check-led.pulse-dim {
+  opacity: 0.35;
+}
+
+.stomp-pedal {
+  position: relative;
+  width: 100%;
+  min-height: 112px;
+  border-radius: 16px;
+  padding: 12px;
+  border: 2px solid rgba(0, 0, 0, 0.35);
+  background: linear-gradient(180deg, var(--stomp-metal-1) 0%, var(--stomp-metal-2) 100%);
+  box-shadow:
+    0 8px 0 rgba(0, 0, 0, 0.42),
+    0 14px 24px rgba(0, 0, 0, 0.35),
+    inset 0 2px 1px rgba(255, 255, 255, 0.45);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: transform 75ms ease, box-shadow 75ms ease;
+}
+
+.stomp-pedal:active,
+.stomp-pedal.pressed {
+  transform: translateY(5px);
+  box-shadow:
+    0 3px 0 rgba(0, 0, 0, 0.48),
+    0 6px 12px rgba(0, 0, 0, 0.32),
+    inset 0 2px 4px rgba(0, 0, 0, 0.25);
+}
+
+.stomp-rubber-pad {
+  width: 100%;
+  min-height: 82px;
+  border-radius: 11px;
+  background-color: var(--stomp-pad);
+  background-image: repeating-linear-gradient(
+    0deg,
+    var(--stomp-pad) 0px,
+    var(--stomp-pad) 5px,
+    var(--stomp-pad-ridge) 5px,
+    var(--stomp-pad-ridge) 8px
+  );
+  border: 1px solid rgba(0, 0, 0, 0.7);
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.65);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 10px;
+}
+
+.stomp-badge-plate {
+  padding: 5px 16px;
+  border-radius: 6px;
+  background: rgba(11, 15, 23, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+}
+
+.stomp-title {
+  font-family: var(--font-display);
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #f8fafc;
+}
+
+.stomp-subtitle {
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: var(--accent-bright);
+}
+
+/* Mobile Narrow Adjustments */
+@media (max-width: 420px) {
+  .pedal-chassis {
+    padding: 14px 12px 18px;
+    border-radius: 20px;
+  }
+
+  .knob-dial-wrap.large {
+    width: 64px;
+    height: 64px;
+  }
+
+  .knob-dial-wrap.large .knob-body {
+    width: 48px;
+    height: 48px;
+  }
+
+  .knob-dial-wrap.mini {
+    width: 46px;
+    height: 46px;
+  }
+
+  .knob-dial-wrap.mini .knob-body {
+    width: 34px;
+    height: 34px;
+  }
+
+  .delay-ms-input {
+    font-size: 1.75rem;
+    width: 96px;
+  }
+}
