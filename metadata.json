@@ -1,0 +1,6 @@
+{
+  "name": "VoxSynth DD-6",
+  "description": "Studio-grade Digital Delay & Live Voice Synthesizer with 3.5mm Wired & Bluetooth audio routing, backing-track overdubbing, and Capacitor Android support.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

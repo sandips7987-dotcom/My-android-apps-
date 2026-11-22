@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VoxSynth DD-6 — Offline Admin License Keygen</title>
+    <style>
+      :root {
+        --bg: #0c1118;
+        --panel: #151c27;
+        --border: rgba(255, 255, 255, 0.1);
+        --text: #f1f5f9;
+        --muted: #94a3b8;
+        --accent: #38bdf8;
+        --success: #34d399;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        background: radial-gradient(circle at 50% 0%, #1c293c 0%, var(--bg) 70%);
+        color: var(--text);
+        font-family: 'DM Sans', system-ui, -apple-system, sans-serif;
+      }
+      .card {
+        width: 100%;
+        max-width: 520px;
+        background: var(--panel);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 26px;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+      }
+      h1 {
+        margin: 0;
+        font-size: 1.35rem;
+        letter-spacing: 0.02em;
+      }
+      p {
+        margin: 4px 0 0;
+        color: var(--muted);
+        font-size: 0.88rem;
+      }
+      label {
+        display: block;
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: var(--muted);
+        margin-bottom: 6px;
+      }
+      input {
+        width: 100%;
+        padding: 12px 14px;
+        border-radius: 10px;
+        border: 1px solid var(--border);
+        background: rgba(0, 0, 0, 0.35);
+        color: var(--text);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 0.98rem;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+      }
+      .btn-row {
+        display: flex;
+        gap: 10px;
+      }
+      button {
+        flex: 1;
+        min-height: 44px;
+        padding: 10px 16px;
+        border-radius: 10px;
+        border: 1px solid transparent;
+        background: #2563eb;
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+      }
+      button.secondary {
+        background: rgba(255, 255, 255, 0.06);
+        border-color: var(--border);
+        color: var(--text);
+      }
+      .result-box {
+        padding: 16px;
+        border-radius: 12px;
+        background: rgba(0, 0, 0, 0.38);
+        border: 1px solid rgba(56, 189, 248, 0.35);
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .key-out {
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 1.12rem;
+        font-weight: 700;
+        color: var(--success);
+        letter-spacing: 0.06em;
+        word-break: break-all;
+      }
+      .history {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        max-height: 170px;
+        overflow-y: auto;
+      }
+      .hist-item {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-family: ui-monospace, monospace;
+        font-size: 0.76rem;
+        color: var(--muted);
+        padding: 6px 8px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 6px;
+      }
+      a {
+        color: var(--accent);
+        text-decoration: none;
+        font-size: 0.84rem;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="card">
+      <div>
+        <h1>VoxSynth DD-6 — Offline Keygen</h1>
+        <p>Generates deterministic HMAC-SHA256 Pro Activation Keys bound to any customer Device ID.</p>
+      </div>
+
+      <div>
+        <label for="device-id-input">Customer Device ID (e.g., VX6-A4K9-M2P7-X8Q3)</label>
+        <input id="device-id-input" type="text" placeholder="VX6-XXXX-XXXX-XXXX" autocomplete="off" />
+      </div>
+
+      <div class="btn-row">
+        <button id="generate-btn" type="button">Generate Pro Key</button>
+        <button id="copy-btn" class="secondary" type="button">Copy Key</button>
+      </div>
+
+      <div class="result-box">
+        <span style="font-size: 0.75rem; color: var(--muted);">GENERATED OFFLINE ACTIVATION KEY</span>
+        <div id="key-output" class="key-out">—</div>
+      </div>
+
+      <div>
+        <label>Recent Keys Issued (Session)</label>
+        <div id="history-list" class="history"></div>
+      </div>
+
+      <a href="/index.html">← Return to VoxSynth DD-6 Studio</a>
+    </main>
+
+    <script type="module">
+      const LICENSE_SIGNING_SECRET = 'VOXSYNTH-DD6-OFFLINE-CRYPTO-SIGNING-KEY-2026-PRO';
+      const ALPHABET = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+
+      function bytesToBase32Key(bytes) {
+        let chars = '';
+        for (let i = 0; i < 20; i++) {
+          chars += ALPHABET[bytes[i % bytes.length] % ALPHABET.length];
+        }
+        return `PRO-${chars.slice(0, 5)}-${chars.slice(5, 10)}-${chars.slice(10, 15)}-${chars.slice(15, 20)}`;
+      }
+
+      async function hmacSha256Bytes(secret, message) {
+        const enc = new TextEncoder();
+        if (window.crypto && window.crypto.subtle) {
+          const key = await window.crypto.subtle.importKey(
+            'raw',
+            enc.encode(secret),
+            { name: 'HMAC', hash: 'SHA-256' },
+            false,
+            ['sign']
+          );
+          const sig = await window.crypto.subtle.sign('HMAC', key, enc.encode(message));
+          return new Uint8Array(sig);
+        }
+        const payload = enc.encode(`${secret}::${message}`);
+        const out = new Uint8Array(32);
+        let h = 0x811c9dc5;
+        for (let i = 0; i < 32; i++) {
+          for (let j = 0; j < payload.length; j++) {
+            h ^= payload[j] + i;
+            h = Math.imul(h, 0x01000193);
+          }
+          out[i] = (h >>> 0) & 0xff;
+        }
+        return out;
+      }
+
+      async function generateProKey(deviceId) {
+        const normalizedId = String(deviceId || '').trim().toUpperCase();
+        const sigBytes = await hmacSha256Bytes(LICENSE_SIGNING_SECRET, `${normalizedId}|PRO|VOXSYNTH-DD6`);
+        return bytesToBase32Key(sigBytes);
+      }
+
+      const inputEl = document.getElementById('device-id-input');
+      const outputEl = document.getElementById('key-output');
+      const genBtn = document.getElementById('generate-btn');
+      const copyBtn = document.getElementById('copy-btn');
+      const historyEl = document.getElementById('history-list');
+
+      // Pre-fill local device ID if present in browser storage
+      const localId = localStorage.getItem('voxsynth_dd6_device_id');
+      if (localId) inputEl.value = localId;
+
+      async function handleGenerate() {
+        const id = inputEl.value.trim().toUpperCase();
+        if (!id) {
+          outputEl.textContent = 'Enter a Device ID first';
+          return;
+        }
+        const key = await generateProKey(id);
+        outputEl.textContent = key;
+
+        const row = document.createElement('div');
+        row.className = 'hist-item';
+        row.innerHTML = `<span>${id}</span><span style="color:#34d399">${key}</span>`;
+        historyEl.prepend(row);
+      }
+
+      genBtn.addEventListener('click', handleGenerate);
+      inputEl.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') handleGenerate();
+      });
+
+      copyBtn.addEventListener('click', async () => {
+        const text = outputEl.textContent.trim();
+        if (!text || text === '—') return;
+        try {
+          await navigator.clipboard.writeText(text);
+          copyBtn.textContent = 'Copied!';
+          setTimeout(() => (copyBtn.textContent = 'Copy Key'), 1400);
+        } catch (_) {}
+      });
+    </script>
+  </body>
+</html>

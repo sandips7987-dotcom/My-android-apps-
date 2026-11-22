@@ -1,0 +1,721 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#11161f" />
+    <title>VoxSynth DD-6 — Digital Delay &amp; Live Voice Synthesizer</title>
+    <meta
+      name="description"
+      content="Studio-grade Digital Delay &amp; Live Voice Synthesizer with 3.5mm Wired &amp; Bluetooth audio routing, backing-track overdubbing, and Capacitor Android support."
+    />
+    <meta property="og:title" content="VoxSynth DD-6 — Digital Delay &amp; Live Voice Synthesizer" />
+    <meta
+      property="og:description"
+      content="Studio-grade Digital Delay &amp; Live Voice Synthesizer with 3.5mm Wired &amp; Bluetooth audio routing, backing-track overdubbing, and Capacitor Android support."
+    />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" type="image/jpeg" href="/src/assets/images/voxsynth_dd6_icon_1795337464034.jpg" />
+    <link rel="apple-touch-icon" href="/src/assets/images/voxsynth_dd6_icon_1795337464034.jpg" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/pedal.css" />
+  </head>
+  <body>
+    <!-- Top Utility Bar -->
+    <header class="topbar">
+      <div id="brand-logo-trigger" class="topbar-brand">
+        <img
+          src="/src/assets/images/voxsynth_dd6_icon_1795337464034.jpg"
+          alt="VoxSynth DD-6"
+          referrerpolicy="no-referrer"
+          width="28"
+          height="28"
+          style="border-radius: 7px; object-fit: cover; align-self: center;"
+        />
+        <span class="brand-wordmark">VoxSynth</span>
+        <span class="brand-model">DD-6</span>
+      </div>
+
+      <nav class="topbar-actions" aria-label="Studio Utilities">
+        <button id="nav-deck-btn" class="util-btn" type="button">
+          <span data-i18n="nav_deck">Track Deck</span>
+        </button>
+        <button id="nav-library-btn" class="util-btn" type="button">
+          <span data-i18n="nav_library">Library</span>
+        </button>
+        <button id="nav-themes-btn" class="util-btn" type="button">
+          <span data-i18n="nav_themes">Themes</span>
+        </button>
+        <button id="nav-lang-btn" class="util-btn" type="button">
+          <span id="nav-lang-label">EN</span>
+        </button>
+        <button id="nav-pin-btn" class="util-btn" type="button">
+          <span data-i18n="nav_pin">PIN Lock</span>
+        </button>
+        <button id="nav-guide-btn" class="util-btn" type="button">
+          <span data-i18n="nav_guide">Guide</span>
+        </button>
+        <button id="nav-pro-btn" class="util-btn pro-btn" type="button">
+          <span id="nav-pro-label" data-i18n="nav_pro">Pro Unlock</span>
+        </button>
+      </nav>
+    </header>
+
+    <!-- Main Studio Workbench -->
+    <main class="workbench">
+      <!-- LEFT / PRIMARY COLUMN: Hardware VoxSynth DD-6 Stompbox Chassis -->
+      <section class="pedal-stage" aria-label="VoxSynth DD-6 Digital Delay Pedal">
+        <div class="pedal-chassis">
+          <span class="chassis-screw screw-tl" aria-hidden="true"></span>
+          <span class="chassis-screw screw-tr" aria-hidden="true"></span>
+          <span class="chassis-screw screw-bl" aria-hidden="true"></span>
+          <span class="chassis-screw screw-br" aria-hidden="true"></span>
+
+          <!-- Hardware Routing Silkscreen Legends -->
+          <div class="jack-strip">
+            <span>&larr; OUTPUT A (MONO)</span>
+            <span class="jack-badge-center">VOXSYNTH DD-6</span>
+            <span>INPUT A / B &larr;</span>
+          </div>
+
+          <!-- 1. Studio Digital OLED / LCD Display Panel -->
+          <div class="oled-bezel">
+            <div class="oled-screen">
+              <!-- Active Status Telemetry -->
+              <div class="oled-telemetry">
+                <div class="tele-group">
+                  <span id="oled-mode-status" class="tele-mode">MEDIUM</span>
+                  <span class="tele-sep">/</span>
+                  <span id="oled-pedal-state" class="tele-state active">ACTIVE</span>
+                  <span class="tele-sep">/</span>
+                  <span id="oled-route-badge" class="tele-route">3.5MM WIRED</span>
+                </div>
+                <div class="tele-group">
+                  <span id="oled-mic-status" class="tele-mic muted">MUTED</span>
+                  <span class="tele-sep">/</span>
+                  <span id="oled-rec-status" class="tele-rec">
+                    <span class="rec-dot" aria-hidden="true"></span>
+                    <span id="oled-rec-text">REC 00:00</span>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Primary 7-Segment / Dot-Matrix Delay Time & Synced BPM -->
+              <div class="oled-readout-row">
+                <div class="delay-readout-block">
+                  <label for="oled-ms-input" class="sr-only">Delay Time in Milliseconds</label>
+                  <input
+                    id="oled-ms-input"
+                    class="delay-ms-input"
+                    type="number"
+                    min="50"
+                    max="3200"
+                    step="1"
+                    value="420"
+                    aria-label="Exact Delay Time Milliseconds"
+                  />
+                  <span class="delay-unit">ms</span>
+                </div>
+
+                <div class="bpm-readout">
+                  <span id="oled-bpm-value" class="bpm-value">142.9</span>
+                  <span class="bpm-label">SYNC BPM</span>
+                </div>
+              </div>
+
+              <!-- Fine-Tune Millisecond Stepper Buttons & Visualizer Switcher -->
+              <div class="oled-finetune-row">
+                <div class="finetune-group">
+                  <button class="oled-micro-btn" type="button" data-ms-delta="-10">-10ms</button>
+                  <button class="oled-micro-btn" type="button" data-ms-delta="-1">-1ms</button>
+                  <button class="oled-micro-btn" type="button" data-ms-delta="1">+1ms</button>
+                  <button class="oled-micro-btn" type="button" data-ms-delta="10">+10ms</button>
+                </div>
+                <div class="finetune-group">
+                  <button id="viz-scope-btn" class="oled-micro-btn active" type="button">SCOPE</button>
+                  <button id="viz-spec-btn" class="oled-micro-btn" type="button">SPEC</button>
+                </div>
+              </div>
+
+              <!-- 60fps Live Canvas Oscilloscope / Frequency Spectrum -->
+              <div class="oled-canvas-wrap">
+                <canvas id="oled-canvas" aria-label="Live Audio Waveform and Spectrum Analyzer"></canvas>
+              </div>
+
+              <!-- Dual Horizontal Input (Mic) & Output (Master) dB Peak Meters -->
+              <div class="vu-rack">
+                <div class="vu-row">
+                  <span class="vu-label">IN</span>
+                  <div class="vu-track"><div id="vu-in-fill" class="vu-fill"></div></div>
+                  <span id="vu-in-db" class="vu-db">-∞dB</span>
+                  <span id="vu-in-clip" class="vu-clip">CLIP</span>
+                </div>
+                <div class="vu-row">
+                  <span class="vu-label">OUT</span>
+                  <div class="vu-track"><div id="vu-out-fill" class="vu-fill"></div></div>
+                  <span id="vu-out-db" class="vu-db">-∞dB</span>
+                  <span id="vu-out-clip" class="vu-clip">CLIP</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Main 4 DD-6 Delay Knobs + 4 Voice Synthesizer Preamp Mini-Knobs -->
+          <div class="knob-section">
+            <!-- A. 4 Large Stompbox Delay Knobs -->
+            <div class="main-knobs-grid">
+              <div class="knob-unit">
+                <span class="knob-label">E.LEVEL</span>
+                <div
+                  class="knob-dial-wrap large"
+                  data-knob="elevel"
+                  role="slider"
+                  tabindex="0"
+                  aria-label="Effect Level"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow="58"
+                >
+                  <svg class="knob-scale-svg" viewBox="0 0 100 100"></svg>
+                  <div class="knob-body">
+                    <div class="knob-cap"><span class="knob-pointer"></span></div>
+                  </div>
+                </div>
+                <span id="readout-elevel" class="knob-readout">58%</span>
+              </div>
+
+              <div class="knob-unit">
+                <span class="knob-label">F.BACK</span>
+                <div
+                  class="knob-dial-wrap large"
+                  data-knob="fback"
+                  role="slider"
+                  tabindex="0"
+                  aria-label="Feedback Repeats"
+                  aria-valuemin="0"
+                  aria-valuemax="98"
+                  aria-valuenow="46"
+                >
+                  <svg class="knob-scale-svg" viewBox="0 0 100 100"></svg>
+                  <div class="knob-body">
+                    <div class="knob-cap"><span class="knob-pointer"></span></div>
+                  </div>
+                </div>
+                <span id="readout-fback" class="knob-readout">46%</span>
+              </div>
+
+              <div class="knob-unit">
+                <span class="knob-label">D.TIME</span>
+                <div
+                  class="knob-dial-wrap large"
+                  data-knob="dtime"
+                  role="slider"
+                  tabindex="0"
+                  aria-label="Delay Time"
+                  aria-valuemin="50"
+                  aria-valuemax="3200"
+                  aria-valuenow="420"
+                >
+                  <svg class="knob-scale-svg" viewBox="0 0 100 100"></svg>
+                  <div class="knob-body">
+                    <div class="knob-cap"><span class="knob-pointer"></span></div>
+                  </div>
+                </div>
+                <span id="readout-dtime" class="knob-readout">420ms</span>
+              </div>
+
+              <div class="knob-unit">
+                <span class="knob-label">MODE</span>
+                <div
+                  class="knob-dial-wrap large"
+                  data-knob="mode"
+                  role="slider"
+                  tabindex="0"
+                  aria-label="Delay Mode Selector"
+                  aria-valuemin="0"
+                  aria-valuemax="5"
+                  aria-valuenow="1"
+                >
+                  <svg class="knob-scale-svg" viewBox="0 0 100 100"></svg>
+                  <div class="knob-body">
+                    <div class="knob-cap"><span class="knob-pointer"></span></div>
+                  </div>
+                </div>
+                <span id="readout-mode" class="knob-readout">M</span>
+              </div>
+            </div>
+
+            <!-- B. 4 Voice Synthesizer & Preamp Studio Trim Mini-Knobs -->
+            <div class="mini-knobs-grid">
+              <div class="knob-unit">
+                <span class="knob-mini-label">MIC GAIN</span>
+                <div
+                  class="knob-dial-wrap mini"
+                  data-knob="micgain"
+                  role="slider"
+                  tabindex="0"
+                  aria-label="Microphone Preamp Gain"
+                  aria-valuemin="0"
+                  aria-valuemax="24"
+                  aria-valuenow="6"
+                >
+                  <svg class="knob-scale-svg" viewBox="0 0 100 100"></svg>
+                  <div class="knob-body">
+                    <div class="knob-cap"><span class="knob-pointer"></span></div>
+                  </div>
+                </div>
+                <span id="readout-micgain" class="knob-readout">+6.0dB</span>
+              </div>
+
+              <div class="knob-unit">
+                <span class="knob-mini-label">GATE</span>
+                <div
+                  class="knob-dial-wrap mini"
+                  data-knob="gate"
+                  role="slider"
+                  tabindex="0"
+                  aria-label="Noise Gate Threshold"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow="22"
+                >
+                  <svg class="knob-scale-svg" viewBox="0 0 100 100"></svg>
+                  <div class="knob-body">
+                    <div class="knob-cap"><span class="knob-pointer"></span></div>
+                  </div>
+                </div>
+                <span id="readout-gate" class="knob-readout">22%</span>
+              </div>
+
+              <div class="knob-unit">
+                <span class="knob-mini-label">TONE / EQ</span>
+                <div
+                  class="knob-dial-wrap mini"
+                  data-knob="tone"
+                  role="slider"
+                  tabindex="0"
+                  aria-label="Vocal Tone EQ"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow="56"
+                >
+                  <svg class="knob-scale-svg" viewBox="0 0 100 100"></svg>
+                  <div class="knob-body">
+                    <div class="knob-cap"><span class="knob-pointer"></span></div>
+                  </div>
+                </div>
+                <span id="readout-tone" class="knob-readout">FLAT</span>
+              </div>
+
+              <div class="knob-unit">
+                <span class="knob-mini-label">REVERB</span>
+                <div
+                  class="knob-dial-wrap mini"
+                  data-knob="reverb"
+                  role="slider"
+                  tabindex="0"
+                  aria-label="Stereo Hall Reverb Space"
+                  aria-valuemin="0"
+                  aria-valuemax="100"
+                  aria-valuenow="24"
+                >
+                  <svg class="knob-scale-svg" viewBox="0 0 100 100"></svg>
+                  <div class="knob-body">
+                    <div class="knob-cap"><span class="knob-pointer"></span></div>
+                  </div>
+                </div>
+                <span id="readout-reverb" class="knob-readout">24%</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Illuminated Hardware Control Push-Buttons -->
+          <div class="hw-buttons-grid">
+            <button id="btn-tap-tempo" class="hw-btn" type="button">
+              <span class="hw-led" aria-hidden="true"></span>
+              <span data-i18n="btn_tap">TAP TEMPO</span>
+            </button>
+
+            <button id="btn-mic-live" class="hw-btn lit-red" type="button">
+              <span class="hw-led" aria-hidden="true"></span>
+              <span data-i18n="btn_mic">MIC LIVE</span>
+            </button>
+
+            <button id="btn-audio-route" class="hw-btn lit-green" type="button">
+              <span class="hw-led" aria-hidden="true"></span>
+              <span id="btn-audio-route-label" data-i18n="btn_route_wired">3.5MM MODE</span>
+            </button>
+
+            <button id="btn-ping-pong" class="hw-btn" type="button">
+              <span class="hw-led" aria-hidden="true"></span>
+              <span data-i18n="btn_pingpong">PING-PONG</span>
+            </button>
+          </div>
+
+          <!-- 4. Master Bus Recorder Transport & Synth Audition Trigger -->
+          <div class="transport-strip">
+            <button id="btn-master-rec" class="transport-btn" type="button">
+              <span data-i18n="btn_rec">REC</span>
+            </button>
+            <button id="btn-master-pause" class="transport-btn" type="button" disabled>
+              <span data-i18n="btn_pause">PAUSE</span>
+            </button>
+            <button id="btn-master-stop" class="transport-btn" type="button" disabled>
+              <span data-i18n="btn_stop">STOP</span>
+            </button>
+            <button id="btn-audition-synth" class="transport-btn audition-btn" type="button">
+              <span data-i18n="btn_test">TEST TONE</span>
+            </button>
+          </div>
+
+          <!-- 5. CHECK LED & Iconic Metallic BYPASS / EFFECT Stomp Footswitch -->
+          <div class="stomp-zone">
+            <div class="check-led-row">
+              <span class="check-led-label">CHECK</span>
+              <span id="check-led" class="check-led on-red" aria-hidden="true"></span>
+            </div>
+
+            <button id="stomp-pedal-btn" class="stomp-pedal" type="button" aria-label="Bypass or Engage Effect Footswitch">
+              <div class="stomp-rubber-pad">
+                <div class="stomp-badge-plate">
+                  <span class="stomp-title">VOX SYNTH</span>
+                  <span id="stomp-subtitle" class="stomp-subtitle">TAP TO BYPASS</span>
+                </div>
+              </div>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT STUDIO RACK: Dual Audio I/O Router, Backing Track Deck, Recordings Library -->
+      <aside class="studio-rack" aria-label="Audio Routing, Backing Deck and Recordings Library">
+        <!-- Panel 1: Dual Audio Output & Input Routing (3.5mm Wired & Bluetooth) -->
+        <section id="panel-audio-router" class="rack-panel">
+          <div class="rack-header">
+            <h2 class="rack-title" data-i18n="io_title">Audio I/O &amp; Hardware Router</h2>
+            <span id="io-hardware-status" class="rack-subtitle">3.5MM WIRED</span>
+          </div>
+
+          <div class="segmented" role="group" aria-label="Audio Output Mode Switcher">
+            <button id="io-mode-wired" class="seg-btn active" type="button">
+              <span data-i18n="io_wired_title">3.5mm Wired</span>
+              <small data-i18n="io_wired_sub">Ultra-Low Latency</small>
+            </button>
+            <button id="io-mode-bt" class="seg-btn" type="button">
+              <span data-i18n="io_bt_title">Bluetooth</span>
+              <small data-i18n="io_bt_sub">BT Sync &amp; Anti-FB</small>
+            </button>
+          </div>
+
+          <div class="io-grid">
+            <div class="field-group">
+              <label for="io-input-select" class="field-label" data-i18n="io_input_label">Microphone Input</label>
+              <select id="io-input-select" class="studio-select"></select>
+            </div>
+            <div class="field-group">
+              <label for="io-output-select" class="field-label" data-i18n="io_output_label">Audio Output Sink</label>
+              <select id="io-output-select" class="studio-select"></select>
+            </div>
+          </div>
+
+          <!-- Bluetooth Sync Compensation & Mic Routing Block -->
+          <div id="bt-controls-block" class="bt-controls disabled-dim">
+            <div class="field-group">
+              <div class="field-label">
+                <label for="bt-sync-slider" data-i18n="io_bt_sync">Bluetooth Latency Sync Offset</label>
+                <span id="bt-sync-value" class="field-value">110ms</span>
+              </div>
+              <input id="bt-sync-slider" class="studio-range" type="range" min="0" max="250" step="1" value="110" />
+            </div>
+
+            <div class="field-group">
+              <label for="bt-mic-source-select" class="field-label" data-i18n="io_bt_mic_source">
+                Bluetooth Vocal Mic Source
+              </label>
+              <select id="bt-mic-source-select" class="studio-select">
+                <option value="phone" data-i18n="io_bt_mic_phone">Phone Built-in Mic + BT A2DP Speaker</option>
+                <option value="bt" data-i18n="io_bt_mic_headset">Bluetooth Headset Mic</option>
+              </select>
+            </div>
+
+            <div class="check-row">
+              <span data-i18n="io_anti_fb">Bluetooth Anti-Feedback Filter</span>
+              <button
+                id="bt-antifb-toggle"
+                class="toggle-switch on"
+                type="button"
+                role="switch"
+                aria-checked="true"
+                aria-label="Bluetooth Anti-Feedback Filter"
+              ></button>
+            </div>
+          </div>
+
+          <div class="btn-row">
+            <button id="io-rescan-btn" class="action-btn" type="button" data-i18n="io_refresh">
+              Rescan Devices
+            </button>
+          </div>
+        </section>
+
+        <!-- Panel 2: Backing Track Upload & Live Overdub Deck -->
+        <section id="panel-backing-deck" class="rack-panel">
+          <div class="rack-header">
+            <h2 class="rack-title" data-i18n="deck_title">Backing Track Overdub Deck</h2>
+            <span id="deck-track-time" class="rack-subtitle">00:00 / 00:00</span>
+          </div>
+
+          <input
+            id="track-file-input"
+            type="file"
+            accept=".mp3,.wav,.ogg,.m4a,audio/*"
+            class="hidden"
+          />
+
+          <div class="btn-row">
+            <button id="deck-upload-btn" class="action-btn primary" type="button" data-i18n="deck_upload">
+              Upload Track
+            </button>
+            <button id="deck-demo-btn" class="action-btn" type="button" data-i18n="deck_demo">
+              Load Studio Groove
+            </button>
+          </div>
+
+          <div class="track-meta">
+            <span id="deck-track-name" class="track-name" data-i18n="deck_no_track">
+              No backing track loaded (.MP3, .WAV, .OGG, .M4A)
+            </span>
+          </div>
+
+          <div class="track-seek-wrap">
+            <input
+              id="deck-seek-bar"
+              class="studio-range"
+              type="range"
+              min="0"
+              max="1000"
+              value="0"
+              disabled
+              aria-label="Backing Track Seek Position"
+            />
+          </div>
+
+          <div class="deck-controls-row">
+            <button id="deck-play-btn" class="action-btn" type="button" disabled data-i18n="deck_play">Play</button>
+            <button id="deck-pause-btn" class="action-btn" type="button" disabled data-i18n="deck_pause">Pause</button>
+            <button id="deck-stop-btn" class="action-btn" type="button" disabled data-i18n="deck_stop">Stop</button>
+            <button id="deck-loop-btn" class="action-btn active-state" type="button" data-i18n="deck_loop">Loop</button>
+            <button id="deck-fx-btn" class="action-btn" type="button" data-i18n="deck_fx_dry">Track FX: Dry</button>
+          </div>
+
+          <div class="deck-vol-row">
+            <div class="field-group">
+              <div class="field-label">
+                <label for="deck-vol-slider" data-i18n="deck_vol">Track Vol</label>
+                <span id="deck-vol-val" class="field-value">75%</span>
+              </div>
+              <input id="deck-vol-slider" class="studio-range" type="range" min="0" max="100" value="75" />
+            </div>
+          </div>
+        </section>
+
+        <!-- Panel 3: IndexedDB Saved Recordings Library -->
+        <section id="panel-library" class="rack-panel">
+          <div class="rack-header">
+            <h2 class="rack-title" data-i18n="lib_title">Saved Recordings Library</h2>
+            <span id="library-count" class="rack-subtitle">0 takes</span>
+          </div>
+
+          <div id="recordings-list" class="recordings-list">
+            <div class="empty-state" data-i18n="lib_empty">
+              No recordings yet. Press REC on the pedal to capture live vocals + backing track.
+            </div>
+          </div>
+        </section>
+      </aside>
+    </main>
+
+    <!-- ====================================================================
+         MODALS: Themes, PIN Settings, User Guide, Pro Licensing & PIN Overlay
+         ==================================================================== -->
+
+    <!-- Themes Modal -->
+    <div id="themes-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="themes-modal-title">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 id="themes-modal-title" class="modal-title" data-i18n="modal_themes">Hardware Visual Themes</h3>
+          <button class="modal-close" type="button" data-close-modal="themes-modal" aria-label="Close">&times;</button>
+        </div>
+        <div id="theme-picker-grid" class="theme-grid"></div>
+      </div>
+    </div>
+
+    <!-- PIN Security Settings Modal -->
+    <div id="pin-settings-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="pin-modal-title">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 id="pin-modal-title" class="modal-title" data-i18n="modal_pin">4-Digit Studio PIN Security</h3>
+          <button class="modal-close" type="button" data-close-modal="pin-settings-modal" aria-label="Close">&times;</button>
+        </div>
+        <div id="pin-settings-status" class="rack-subtitle">Startup PIN Lock is DISABLED</div>
+        <div class="field-group">
+          <label for="pin-new-input" class="field-label">New 4-Digit PIN</label>
+          <input
+            id="pin-new-input"
+            class="studio-input"
+            type="password"
+            inputmode="numeric"
+            maxlength="4"
+            placeholder="••••"
+          />
+        </div>
+        <div class="btn-row">
+          <button id="pin-save-btn" class="action-btn primary" type="button" data-i18n="pin_save">Enable / Update PIN</button>
+          <button id="pin-lock-now-btn" class="action-btn" type="button" data-i18n="pin_lock_now">Lock Now</button>
+          <button id="pin-disable-btn" class="action-btn danger" type="button" data-i18n="pin_disable">Disable PIN Lock</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Startup PIN Lock Overlay -->
+    <div id="pin-lock-overlay" class="pin-overlay hidden" role="dialog" aria-modal="true" aria-label="Enter PIN to Unlock">
+      <div class="pin-box">
+        <span class="brand-wordmark">VoxSynth DD-6</span>
+        <span class="rack-subtitle" data-i18n="pin_enter">Enter 4-Digit PIN to Unlock</span>
+        <div id="pin-lock-dots" class="pin-dots">
+          <span class="pin-dot"></span>
+          <span class="pin-dot"></span>
+          <span class="pin-dot"></span>
+          <span class="pin-dot"></span>
+        </div>
+        <div id="pin-lock-error" style="color: #f87171; font-size: 0.78rem; min-height: 18px;"></div>
+        <div id="pin-keypad" class="pin-pad">
+          <button class="pin-key" type="button" data-pin-key="1">1</button>
+          <button class="pin-key" type="button" data-pin-key="2">2</button>
+          <button class="pin-key" type="button" data-pin-key="3">3</button>
+          <button class="pin-key" type="button" data-pin-key="4">4</button>
+          <button class="pin-key" type="button" data-pin-key="5">5</button>
+          <button class="pin-key" type="button" data-pin-key="6">6</button>
+          <button class="pin-key" type="button" data-pin-key="7">7</button>
+          <button class="pin-key" type="button" data-pin-key="8">8</button>
+          <button class="pin-key" type="button" data-pin-key="9">9</button>
+          <button class="pin-key" type="button" data-pin-key="clear">CLR</button>
+          <button class="pin-key" type="button" data-pin-key="0">0</button>
+          <button class="pin-key" type="button" data-pin-key="back">&larr;</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- User Guide Modal ("How to Connect Mic & Use") -->
+    <div id="guide-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="guide-modal-title">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 id="guide-modal-title" class="modal-title" data-i18n="modal_guide">How to Connect Mic &amp; Use VoxSynth DD-6</h3>
+          <button class="modal-close" type="button" data-close-modal="guide-modal" aria-label="Close">&times;</button>
+        </div>
+        <ul class="guide-list">
+          <li>
+            <strong>1. 3.5mm Wired Headset / AUX Line-Out (Ultra-Low Latency)</strong>
+            Plug in a 3.5mm wired earphone, TRRS mic, or AUX cable to a mixer/PA speaker. Select 3.5mm Wired Mode, tap MIC LIVE, and raise MIC GAIN (+6dB to +18dB) and GATE until room hiss disappears.
+          </li>
+          <li>
+            <strong>2. Bluetooth Speaker / TWS Setup (A2DP Stereo Quality)</strong>
+            Switch AUDIO ROUTE to Bluetooth Mode. Choose "Phone Built-in Mic + BT A2DP Speaker" so Android keeps crisp stereo speaker quality while you sing into the phone mic. Keep Bluetooth Anti-Feedback ON and tune the 0–250ms Sync Slider.
+          </li>
+          <li>
+            <strong>3. Tactile Knobs, WARP/REV &amp; 5.2s HOLD Looper</strong>
+            Drag vertically on any knob, scroll wheel, or double-tap to reset. Turn MODE to WARP/REV for swirling pitch-modulated reverse echoes, or HOLD to record &amp; loop vocal phrases up to 5.2 seconds via the metallic stomp pedal.
+          </li>
+          <li>
+            <strong>4. Backing Track Overdubbing &amp; Export</strong>
+            Upload an MP3/WAV/OGG/M4A backing track (or load the built-in Studio Groove), toggle TRACK FX Dry/On, press REC on the pedal to capture the combined mix, and export lossless WAV or 192kbps MP3 from the Library.
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Pro Paywall & Offline License Modal -->
+    <div id="pro-paywall-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="pro-modal-title">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3 id="pro-modal-title" class="modal-title" data-i18n="modal_pro">VoxSynth DD-6 Pro License</h3>
+          <button class="modal-close" type="button" data-close-modal="pro-paywall-modal" aria-label="Close">&times;</button>
+        </div>
+
+        <div id="pro-license-status" class="rack-subtitle">STANDARD EDITION</div>
+
+        <div class="qr-card">
+          <div class="qr-canvas-frame">
+            <canvas id="pro-qr-canvas" width="150" height="150"></canvas>
+          </div>
+          <p style="margin: 0; font-size: 0.78rem; color: var(--text-secondary); text-align: center;" data-i18n="pro_qr_hint">
+            Scan QR to purchase Pro License, then send your Device ID to receive your offline unlock key.
+          </p>
+        </div>
+
+        <div class="field-group">
+          <span class="field-label" data-i18n="pro_device_id">Your Offline Device ID</span>
+          <div class="device-id-row">
+            <span id="pro-device-id-text">VX6-XXXX-XXXX-XXXX</span>
+            <button id="pro-copy-id-btn" class="rec-mini-btn" type="button" data-i18n="pro_copy">Copy ID</button>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="pro-key-input" class="field-label" data-i18n="pro_key_label">Enter Offline Activation Key</label>
+          <input
+            id="pro-key-input"
+            class="studio-input"
+            type="text"
+            placeholder="PRO-XXXXX-XXXXX-XXXXX-XXXXX"
+            autocomplete="off"
+          />
+        </div>
+
+        <button id="pro-activate-btn" class="action-btn primary" type="button" data-i18n="pro_activate">
+          Verify &amp; Unlock Pro
+        </button>
+      </div>
+    </div>
+
+    <!-- Hidden Master Admin Unlock Modal (Triggered by 14 consecutive logo taps within 6s) -->
+    <div id="master-admin-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="master-admin-title">
+      <div class="modal-card" style="max-width: 360px;">
+        <div class="modal-header">
+          <h3 id="master-admin-title" class="modal-title">Master Admin Unlock</h3>
+          <button class="modal-close" type="button" data-close-modal="master-admin-modal" aria-label="Close">&times;</button>
+        </div>
+        <div class="field-group">
+          <label for="master-admin-pin-input" class="field-label">Enter 6-Digit Master PIN</label>
+          <input
+            id="master-admin-pin-input"
+            class="studio-input"
+            type="password"
+            inputmode="numeric"
+            maxlength="6"
+            placeholder="••••••"
+            autocomplete="off"
+          />
+        </div>
+        <div id="master-admin-error" style="color: #f87171; font-size: 0.78rem; min-height: 16px;"></div>
+        <button id="master-admin-unlock-btn" class="action-btn primary" type="button">
+          Unlock Master Pro
+        </button>
+      </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-shelf" class="toast-shelf" aria-live="polite"></div>
+
+    <script type="module" src="/js/app.js"></script>
+  </body>
+</html>
